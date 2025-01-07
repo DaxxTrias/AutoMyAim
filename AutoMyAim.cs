@@ -105,6 +105,11 @@ public class AutoMyAim : BaseSettingsPlugin<AutoMyAimSettings>
         if (targetEntity == null) return;
 
         _currentTarget = targetEntity;
+        if (Settings.UsePluginBridgeWarnings)
+        {
+            if (_pickitIsActive?.Invoke() ?? false)
+                return;
+        }
         UpdateCursorPosition(rawPosToAim);
     }
 
@@ -159,10 +164,6 @@ public class AutoMyAim : BaseSettingsPlugin<AutoMyAimSettings>
 
     private bool ShouldProcess()
     {
-        bool isPickitActive = _pickitIsActive?.Invoke() ?? false;
-        if (isPickitActive && Settings.UsePluginBridgeWarnings) 
-            return false;
-
         if (!Settings.Enable) return false;
         if (GameController is not { InGame: true, Player: not null }) return false;
         return !GameController.Settings.CoreSettings.Enable &&
