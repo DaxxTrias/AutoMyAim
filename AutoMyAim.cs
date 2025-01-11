@@ -52,7 +52,7 @@ public class AutoMyAim : BaseSettingsPlugin<AutoMyAimSettings>
         // Register terrain update handler
         Settings.UseWalkableTerrainInsteadOfTargetTerrain.OnValueChanged += (_, _) => { RayCaster.UpdateArea(); };
 
-        _pickitIsActive = GameController.PluginBridge.GetMethod<Func<bool>>("PickIt.IsCurrentlyPicking");
+        _pickitIsActive = GameController.PluginBridge.GetMethod<Func<bool>>("PickIt.IsActive");
 
         return true;
     }
